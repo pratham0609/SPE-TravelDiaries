@@ -13,3 +13,6 @@ services:
     container_name: backend-container
     ports:
       - "8000:8000"
+networks:
+  ansible_default:
+    external: true
