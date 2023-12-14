@@ -8,21 +8,21 @@ pipeline {
         
         stage('Stage 1: Pull code from Github') {
             steps {
-                git branch: 'main', url: 'https://github.com/rishi-vakharia/SPE-FinalProj.git'
+                git branch: 'main', url: 'https://github.com/pratham0609/SPE-TravelDiaries.git'
             }
         }
 
         stage('Stage 2: Build frontend docker image') {
             steps {
                 echo "Build frontend docker image"
-                sh "docker build -t rishivakharia/frontend-image:latest frontend/"
+                sh "docker build -t prathamdandale/frontend-image:latest frontend/"
             }
         }
 
         stage('Stage 3: Build backend docker image') {
             steps {
                 echo "Build backend docker image"
-                sh "docker build -t rishivakharia/backend-image:latest backend/"
+                sh "docker build -t prathamdandale/backend-image:latest backend/"
             }
         }
 
@@ -32,10 +32,10 @@ pipeline {
                     docker.withRegistry('', 'DockerHubCredentials') {
                         
                         echo "Push frontend Docker Image to Docker Hub"
-                        sh "docker push rishivakharia/frontend-image:latest"
+                        sh "docker push prathamdandale/frontend-image:latest"
 
                         echo "Push backend Docker Image to Docker Hub"
-                        sh "docker push rishivakharia/backend-image:latest"
+                        sh "docker push prathamdandale/backend-image:latest"
 
                     }
                 }
