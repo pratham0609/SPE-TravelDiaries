@@ -1,0 +1,258 @@
+****IMP	Quesions
+What is NodeJS.
+What are REST APIs.
+What are middlewares.
+How does a website work internally.
+What is MongoDB? Why use it instead of MySQL?
+Which type of MongoDB database to prefer and why?
+Advantages of REST
+How to increase scalability?
+Some practical questions – (How does a video go trending on YouTube, How to display the top 1000 users who viewed your video, etc)
+****
+
+
+
+
+
+
+
+App.js defines App function, 
+which is rendered by index.js (root element)
+and at last code gets appended in index.html 
+App inside div 'root'
+
+
+The files having ' .jsx ' are react files.
+
+
+~Material UI
+Box from mui is div
+
+Login:
+Textfield: standard for username,pass
+Button for login,create account
+different styling for login/signup
+see all attributes of the const SignupButton
+label~placeholder
+import useState from React for switching bw Login and Signup state
+passing event to dynamically change input details
+
+nodemon detects changes and restarts the server
+its a dev dependency, meaning it is used only in development, not production
+
+cloud.mongodb.com: create user who can access db
+connect from local environment (preferred) or setup IP access list
+create db.js for connection to cloud db
+mongoose library for connection
+mongoose.connect(url,{useNewURLParser})
+for URL, go to cloud.mongodb.com's cluster and click on connect to app to get MONGODB url to paste in code
+
+The line:
+export default "    " helps in  importing directly in form of:
+import "    " from {path}
+since in url, username,pass are leaked, import dotenv and make ".env" file to store credentials
+(its safer as this file isnt pushed on github )
+
+
+Routes.js in backend, route is API endpoint
+like: facebook.com/users ; here fb.com is API url, and users is the endpoint
+routes.js define the API and files in controller folder define the callback fns,
+which are used in routes files after importing from controller
+import routes in App.js, and use it using App.use
+
+
+request for signup sends a body containing the 3 required details
+as we  need to validate inout details (check if theyre not bad input), we create a 'model' folder
+to define db schema
+
+In frontend src, in service folder,api.js file defines the apis to be called on different events
+with help of 'axios', we define interceptors for req and response.
+For process Response, only 2 possibility: (code 200(pass) or not)
+For process Error, (mostly something wrong in setting up frontend itself) OR
+No response itself (error in request)
+
+config.js defines all the possible API messages
+This helps as now api.js can have a single for of loop to itereate over all apis defined in config.js
+
+
+To solve cors (Cross origin Resourse Issue, ie, a browser security issue 
+due to different ports for diff ports for backend,frntend), import cors after npm install cors
+
+Express.js latest version dont know how to handle POST API , so npm install body-parser
+only post request as it as body
+
+For password encryption, use bcrypt library to get hash and use a random salt to prefix and suffix
+
+Similarly proceed with login and for calling const loginUser API, define it in controller,api.js,config.js
+For checking username, see about findOne function
+for password, use bcrpyt.compare function
+
+If matched, import jwtwebtoken to create access and refresh token (refresh as access has variable expiry time)
+If we have refresh token, we can easily create access token with it.
+
+After expity of access token, we need refreshtoken to generate new access token, so we save it in mongoose, (access token has 15 minute timer, after which it expires)
+by creating a schema in model folder: token.js
+
+After saving, return access,refresh token along with name and username
+Name, username returned from here as theyre needed even after successfull login (context provided)
+So, create a context folder having a Dataprovider file, which has a 'DataProvider' component which helps in
+wrapping up details which are needed to be exported.
+
+Data can be exported as a prop(inside <...>) or as children(data in bw <>...</>)(children used in project)
+--------   ↑Read more about this↑   ------------
+
+After creating context, login page is almost done, so now we move on to home page(make folder and home.jsx).
+
+For transition between different pages, we use URL based routing, where component is changed after url change
+~npm i React-router-dom package have BrowserRouter package, and Routes package
+Wherever we want routing functionality we've to wrap those with 'Routes' package, and
+'Route' package to define the exact URL route path.
+
+To navigate after successful login, go to Login.jsx file, 
+import package UseNavigate to navigate after login
+
+After this, we focus on header component of Home page, 
+create Header folder with header.jsx.
+It has AppBar, ToolBar, styled(for css), imported from material UI
+
+From react-router-dom, install 'Link' to get hyperlink for Toolbar/Appbar components of homepage
+
+Inside App compopnent, we need to stop direct website access (w/o Login), which is again
+done with the help of 'useState' library.
+Two vars: isAuthenticated, isUserAuthenticated to maitin state
+For, transition bw pages, in App.js, const PrivateRoute defined.
+It will check if user is authenticated.
+This function will wrap around all routes except login page, where it checks if user authenticated/not
+If authenticated, it will open outlet, ie, child component.
+
+Header will be kept in const Private route as it needs to be shown after login.
+
+Similarly like home, define Banner.jsx which will have banner of home page, with its CSS defined.
+
+Inside home component, we'll have a categories component, with buttons for:
+Create Blog, etc, so create Categories.jsx inside Home folder.
+Categories will define all the categories of blogs, use table(table,tablehead,tablecell,tablebody) imported from MUI,
+and loop over its entities to create rows for all table rows creation.
+
+To have the Categories portion and actual blog cards side by side instead of above-below, 
+use Grid from MUI
+
+Now we need to create the page of 'Create Blog'.
+Inside component folder, make a 'create' folder with CreatePost.jsx file.
+Create route in App.js.
+In categories.jsx, create direct link from 'Create Blog' button
+Import FormControl from MUI to create form for create blog.
+
+For blog input, use textareaautosize from MUI to have variable size i/p.
+For immediate display of uploaded image import useEffect from 'react'.
+Now we need to upload the image to mongoose, anf again display the uploaded image 
+using appropriate API calls.
+
+Make URL routes for each of the create for respective category like:
+<Link to={`/create?category=${category || ''}`} (in categories.jsx):
+Here, "  category=${category || ''}   " is *search param*, meaning for an eg:
+category=Place,
+this is search param,
+Now we need to extract where exaclty to land by detecting the category using useSearchParam from react-router,
+We extract the exact place.
+
+
+In createpost.jsx:
+For changing screen to display input items, use onChange function, which calls handle change function.
+For saving the image uploaded, use useState function to save image onto mongodb
+
+**SEE FUNCTION USEEFFECT OF CREATEPOST.JSX
+
+
+***IMP***
+Middleware: (read in detail)
+image gets converted to binary after upload, so need to convert back with middleware(multer gridfs storage here).
+So make folder utils with upload.js file as middleware.
+router.post takes 3 arguments: route, middleware and API function
+
+
+
+now make upload.js.
+
+
+After uploading image, we need to return it back (using image-controller file):
+getImage file gets image from mongodb using the url where it is uploaded.
+getImage needs to convert back the image from binary form using gridfs-stream: readstream.pipe
+
+Now on pulish buttion click, call POST API. create post api service.
+
+After posting, navigate back to home page.
+
+While posting blog, check if user has jwt access token.
+For getting accesstoken, make common-utils file in utils folder.
+or checking access, we pass authenticateToken in createpost API route, so, make jwt-controller file having authenticateToken function.
+[AuthenticateToken function is the middleware***]
+jwt.verify checks accesstoken and secret key before validating. 
+
+For post, we create mongoose Schema in model folder.
+
+
+							Video 4 end
+___________________________________________________________________________________________________________________________________________________
+
+Now, we need to dispay the blog posted  on home page.
+Inside component folder, inside home folder, create a post folder.
+So we need to call API as soon as we land on homepage.
+For backend implentation, simply add a route in routes.js.
+Now update post contoller file to add necessary functions.
+Posts handle all posts, while post says how to display a single post.
+Single post occupies large area, so import grid for better display.
+for keeing words within the card displayed for a post, use 'word-break' css, along with addEllipsis function made in utils/common-utils.
+Add default image.
+For displaying posts according to the category/lpace, we need to pass params in the api.
+Handling of params happens in api.js in service folder, in axiosIstance,interceptors.use, we need to include params:true in configs.
+After this in axiosInstance, we need to check the type of post, so in common-util add getType function.
+getType checks if input is query or params 
+        if params, then in api, set config.params = config.type.PARAMS
+	if query, then set config.url = config.url + '/' + config.TYPE.query;
+
+Now we can set whether we need to show only posts of specific category or all posts.
+
+
+After this, we need to set the view to show when one of the cards is selected.
+So inside comopnents folder, make new details folder having DetailView.jsx file which will give the detailed view.
+Create route using the path like '/details/:id' to uniquely id the blogs.
+Now inside Posts.jsx, import 'Link' from react-router-dom, and in this ile itself, wrap the 'Post' inside
+return block with :
+		   Link style={{textDecoration: 'none', color: 'inherit'}} to={`details/${post._id}`
+Here post/_id helps in uniquely identifying which details to display (ID from mongoDB).
+
+Now we make the Detailiew.jsx file, where we extract id of post to be displayed and make API call inside const DetailView(), 
+using useEffect() imported from ' react '.
+So we make new API inside config.js to have an API: 'getpostbyID' and amke new api in Post-Controller.js
+
+After displaying post, we need to check if EDIT/DELETE access needs to be given, so we import :
+		UseContext from react and DataProvider as DataContext to check if current user matches the author.
+
+
+
+________________________________		Video 5 end		_________________________________
+
+
+
+In 6th video, we work on update and delete functionality.
+
+Update:Edit Blog for user
+Make a jsx file inside create folder itself as they are gonna be similar except update will have pre filled data.
+Wrap edit button link to /update/post._id
+
+or dislaying reviously saved blog, we need useEffect to fetch data with the post id.
+Add url in config.js and make put API route in route.js, add update post API in post-coontroller.
+
+Similarly implement delete.
+In api.js, in axiosinstance where data is set, if its delete call, then no data(empty object{}or emty string '') is to be sent, else
+the body.
+
+In detailview.jsx, 	in container = styled(box), we use teme to make the picture responsive.
+
+
+
+_________________________________	      Video 6 end               ____________________________________
+
+
+In the 7th video, comments, about and contact section.
