@@ -15,7 +15,10 @@ import Router from './routes/route.js';
 // CONFIGURE 1
 dotenv.config();
 const app = express();
-app.use(cors());
+app.use(cors()); // update later to prevent unauthorized access
+// app.use(cors({
+//     origin: process.env.FRONTEND_URL || 'http://localhost:3000'
+// }));
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
