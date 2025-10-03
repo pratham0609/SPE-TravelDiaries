@@ -15,10 +15,12 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     function(config) {
+        console.log('REQUEST CONFIG:', config);
         if (config.TYPE.params) {
             config.params = config.TYPE.params
         } else if (config.TYPE.query) {
             config.url = config.url + '/' + config.TYPE.query;
+            console.log('FINAL URL:', config.url); // ADD THIS
         }
         return config;
     },

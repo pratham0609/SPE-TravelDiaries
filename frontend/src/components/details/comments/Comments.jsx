@@ -43,6 +43,28 @@ const Comments = ({ post }) => {
 
     useEffect(() => {
         const getData = async () => {
+            
+
+// LOGGED FOR DEBUGGING PURPOSES, which helped identify the issue with fetching comments
+// Added checks to ensure post and post._id are defined before making the API call
+// This prevents errors when post data is not yet available
+// calls were being made with undefined postId, leading to failed requests
+// Now, comments are fetched only when valid postId is present
+// This ensures comments load correctly once post data is available
+// Helps maintain app stability and improves user experience [RESOLVED RUNTIME ERROR]
+
+            if (!post || !post._id) {
+                console.log('Post ID not available yet, skipping fetch');
+                return;
+            }
+
+            console.log('POST OBJECT:', post); // ADD THIS
+            console.log('POST._ID:', post._id); // ADD THIS
+            console.log('TYPE OF POST._ID:', typeof post._id); // ADD THIS
+            
+            console.log('POST ID:', post._id);
+
+
             const response = await API.getAllComments(post._id);
             if (response.isSuccess) {
                 setComments(response.data);
