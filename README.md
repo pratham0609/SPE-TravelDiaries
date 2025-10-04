@@ -1,3 +1,12 @@
+Deployment
+
+* Backend - https://spe-traveldiaries.onrender.com/ 
+
+Start backend first [link above] as its hosted on free instance that goes down with inactivity 
+
+* Frontend - https://spe-travel-diaries-duqi5aq03-pratham0609s-projects.vercel.app/
+
+
 Frontend
 
 * There are no env variables for /frontend
