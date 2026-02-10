@@ -141,7 +141,7 @@ const Login = ({ isUserAuthenticated }) => {
                             {error && <Error>{error}</Error>}
 
                             <LoginButton variant="contained" onClick={() => loginUser()} >Login</LoginButton>
-                            <Text style={{ textAlign: 'center' }}>OR</Text>
+                            <Text style={{ textAlign: 'center' }}> <br /> OR <br /><br />[Please note that backend is hosted on free Render service that does down with 15 min inactivity so first attempt might fail or take longer time ]</Text>
                             <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
                         
                         </Wrapper> :
