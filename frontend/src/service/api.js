@@ -7,7 +7,7 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
 const axiosInstance = axios.create({
     baseURL: API_URL,
-    timeout: 10000, 
+    timeout: 40000, // increase as backend goes down with inactivity on free hosting services and takes 30 sec to boot up, so first attempt might fail or take longer time 
     headers: {
         "content-type": "application/json"
     }
